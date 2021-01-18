@@ -19,3 +19,13 @@ The idea and scope of this mod will be to cover as many weather/elemental effect
     - The increased thirst rating would be some sort of summation or multiplier to Needs mods thirst system 
       while being a base rating plus a multiplier to the base rating for a standalone version
 
+### Current Mod Progress
+
+#### MCM Configuration
+Main Page
+
+![Alt text](Resources/README_Photos/MCM_Main.png?raw=true "Main Page")
+
+Settings Page 
+
+![Alt text](Resources/README_Photos/MCM_Settings.png?raw=true "Settings Page")
