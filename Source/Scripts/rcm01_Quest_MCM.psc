@@ -7,15 +7,15 @@ int Function GetVersion()
 	return 1;
 EndFunction
 
-; #####################
+; ##########################
 ; #  Variable Forward Declarations  
-; #####################
+; ##########################
 string[] presetsList
 
 
-; #############
+; ##################
 ; #    Variable OIDs  
-; #############
+; ##################
 int iThirstSlider
 int presetSelection
 int toggleMod
@@ -27,9 +27,9 @@ int toggleDryWells
 int toggleFlammableWood
 int toggleIncreasedThirst
 
-; ###############
+; ####################
 ; # Variable State Values
-; ###############
+; ####################
 float thirstSummation = 35.0
 int  presetIndex = 2
 bool bEnableMod = false
@@ -90,21 +90,26 @@ Event OnPageReset(string page)
 	Elseif (page == "Settings")
 		SetCursorFillMode(LEFT_TO_RIGHT)
 
+        SetCursorPosition(0)
+
 		AddHeaderOption("Puddle Effects")
+
+            SetCursorPosition(2)
+
             ; Enables Puddles To Dynamically Form Based Off Of Weather And Placement
 		    togglePuddles = AddToggleOption("Enable Dynamic Puddles", bPuddles)
 
-            SetCursorPosition(2)
+            SetCursorPosition(4)
 
             ; Enables Puddles To Stream If Overflowing Terrain Concavity		 
             togglePuddleRunoff = AddToggleOption("Enable Puddle Runoffs", bPuddleRunoff)
             
-		SetCursorPosition(4)
+		SetCursorPosition(6)
 
 		; Enables The Chance That Puddles Will Freeze When Hit With Ice Magic, Dragon Ice, Or Dynamically In Colder Weather 
             togglePuddleFreeze = AddToggleOption("Enable Puddle Freeze Over", bPuddleFreeze)
             
-		SetCursorPosition(6)
+		SetCursorPosition(8)
 
 		; Enable The Chance That Puddles Will Evaporate Into Steam On Fire Magic Or Dragon Fire            
             togglePuddleSublimation = AddToggleOption("Enable Puddle Sublimation", bPuddleSublimation)
