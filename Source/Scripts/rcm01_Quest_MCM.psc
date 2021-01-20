@@ -1,4 +1,5 @@
-Scriptname rcm01_Quest_MCM extends SKI_ConfigBase 
+Scriptname rcm01_Quest_MCM extends SKI_ConfigBase
+
 
 ; ##########################
 ; #  Versioning Of Script
@@ -13,52 +14,27 @@ EndFunction
 string[] presetsList
 string[] pages
 
-; ######################
-; #    Variable OIDs  
-; ######################
-
-; Main Page Identifiers
-int toggleMod
-
-; Settings Page Identifiers
-int thirstSlider
-int presetSelection
-int togglePuddles
-int togglePuddleRunoff
-int togglePuddleFreeze
-int togglePuddleSublimation
-int toggleDryWells
-int toggleFlammableWood
-int toggleIncreasedThirst
-
-; Debug Page Identifiers
-int toggleDebugMode
-
 ; ###########################
 ; # Variable State Values
 ; ###########################
 
 ; Main Page Variables
-bool isModEnabled = false
+bool isModEnabled
 
 ; Settings Page Variables
 float thirstSummation = 50.0
 int  presetIndex = 2
-bool isPuddles = false
-bool isPuddleRunoff = false
-bool isPuddleFreeze = false
-bool isPuddleSublimation = false
-bool isDryWells = false
-bool isFlammableWood = false
-bool isThirstIncreased = false
-bool isThirstEnabled  = false
-
-; Flags
-int flag_enableThirstSlider 
+bool isPuddles
+bool isPuddleRunoff
+bool isPuddleFreeze
+bool isPuddleSublimation
+bool isDryWells
+bool isFlammableWood
+bool isThirstIncreased
+bool isThirstEnabled
 
 ; Debug Page Variables
-bool isDebugEnabled = false
-
+bool isDebugEnabled
 
 ; Initializes The MCM Registration 
 Event OnConfigInit()
@@ -82,35 +58,8 @@ Event OnConfigRegister()
     Debug.Notification("Dynamic Weather Effects Registered Successfully")
 EndEvent
 
-; Handle Update Logic Here For Incremental Additions To Mod/Menu - EX:
-; Event OnVersionUpdate(int version)
-;   if(version >= 2)
-;       Debug.Trace(self + ": Updating script to version 2")
-;       Initialize New Variables, Add New Options, Update Scripts, etc
-;   endif
-;EndEvent
-
-;/
-    Global Function For Global Variable Workaround 
-    Note: While The Slider Now Toggles When Enable Increased Thirst Is
-          Toggled, When You Swap Pages Or Close And Reopen The MCM, The
-          Slider Is Greyed Out Until You Toggle The Thirst Option Again
-    ToDo: Fix The Toggle On Close And Page Switch
-/;
-int Function isSliderEnabled( bool toggleValue)
-        if(!toggleValue)
-                flag_enableThirstSlider = OPTION_FLAG_DISABLED
-            else
-                flag_enableThirstSlider = OPTION_FLAG_NONE
-            endif 
-        return flag_enableThirstSlider
-    EndFunction
-
-; Essentially, The MCM Has To Redraw It's Contents Every Time A Page Is Selected
-; This Is How It Will Know What To Redraw
-Event OnPageReset(string page)
-
-    ; This Is The Initial Screen That Users Would See
+Function OnPageReset(string page)
+ ; This Is The Initial Screen That Users Would See
     if (page == "")
         LoadCustomContent("")
     Else
@@ -124,10 +73,10 @@ Event OnPageReset(string page)
     if (page == "Main Page")
         SetCursorFillMode(TOP_TO_BOTTOM)
         AddHeaderOption("Main Options")
-            toggleMod = AddToggleOption("Enable Dynamic Weather Effects", isModEnabled)
+            AddToggleOptionST("EnableMod", "Enable Dynamic Weather Effects", isModEnabled)
                 AddEmptyOption()
-                presetSelection = AddMenuOption("Presets", presetsList[presetIndex])
-        
+                AddMenuOptionST("PresetSelection","Presets", presetsList[presetIndex])
+
         ; ####################################################
         ; #                Settings Page                     #
         ; ####################################################
@@ -140,41 +89,55 @@ Event OnPageReset(string page)
 
             SetCursorPosition(2)
             ; Enables Puddles To Dynamically Form Based Off Of Weather And Placement
-            togglePuddles = AddToggleOption("Enable Dynamic Puddles", isPuddles)
+            AddToggleOptionST("EnableDynamicPuddles","Enable Dynamic Puddles", isPuddles)
 
             SetCursorPosition(4)
             ; Enables Puddles To Stream if Overflowing Terrain Concavity         
-            togglePuddleRunoff = AddToggleOption("Enable Puddle Runoffs", isPuddleRunoff)
-            
+            if(isPuddles)
+                AddToggleOptionST("EnablePuddleRunoffs","Enable Puddle Runoffs", isPuddleRunoff, OPTION_FLAG_NONE)
+            else
+                AddToggleOptionST("EnablePuddleRunoffs","Enable Puddle Runoffs", isPuddleRunoff, OPTION_FLAG_DISABLED)
+            endif
+
             SetCursorPosition(6)
             ; Enables The Chance That Puddles Will Freeze When Hit With Ice Magic, Dragon Ice, Or Dynamically In Colder Weather 
-            togglePuddleFreeze = AddToggleOption("Enable Puddle Freeze Over", isPuddleFreeze)
-            
+            if(isPuddles)
+                AddToggleOptionST("EnablePuddleFreezing","Enable Puddle Freezing", isPuddleFreeze, OPTION_FLAG_NONE)
+            else
+                AddToggleOptionST("EnablePuddleFreezing","Enable Puddle Freezing", isPuddleFreeze, OPTION_FLAG_DISABLED)
+            endif
+
             SetCursorPosition(8)
             ; Enable The Chance That Puddles Will Evaporate Into Steam On Fire Magic Or Dragon Fire            
-            togglePuddleSublimation = AddToggleOption("Enable Puddle Sublimation", isPuddleSublimation)
-            
+            if(isPuddles)
+                AddToggleOptionST("EnablePuddleSublimation","Enable Puddle Sublimation", isPuddleSublimation, OPTION_FLAG_NONE)
+            else 
+                AddToggleOptionST("EnablePuddleSublimation","Enable Puddle Sublimation", isPuddleSublimation, OPTION_FLAG_DISABLED)
+            endif
+
          SetCursorPosition(1)
          AddHeaderOption("Arid Weather Effects")
             
             SetCursorPosition(3)
             ; Wells Will Dynamically Dry Up if The Region Doesn't Experience Frequent Rain Storms And The Weather Is Too Hot
-            toggleDryWells = AddToggleOption("Enable Dry Wells", isDryWells)
+            AddToggleOptionST("EnableDryWells","Enable Dry Wells", isDryWells)
             
             SetCursorPosition(5)          
             ; Chance To Burn if Fire Magic, Dragon Fire, Or Torched
-            toggleFlammableWood = AddToggleOption("Enable Flammable Woodpiles", isFlammableWood) 
+            AddToggleOptionST("EnableFlammableWoodPiles","Enable Flammable Woodpiles", isFlammableWood) 
            
             SetCursorPosition(7)            
             ; if Needs Mod Enabled, Slightly Increases Thirst Rate
-            toggleIncreasedThirst = AddToggleOption("Enable Increased Thirst", isThirstIncreased)
+            AddToggleOptionST("EnableIncreasedThirst","Enable Increased Thirst", isThirstIncreased)
 
             SetCursorPosition(9)
-            ; Adds A Multiplier Slider if Increased Thirst Is Enabled 
-            int verifiedFlag = isSliderEnabled(isThirstEnabled)          
-            SetOptionFlags(thirstSlider, verifiedFlag)
-            thirstSlider = AddSliderOption("Increased Thirst Rate", thirstSummation, "{2}", flag_enableThirstSlider)
-        
+            ; Adds A Multiplier Slider if Increased Thirst Is Enabled
+                if (isThirstIncreased)
+                    AddSliderOptionST("EnableIncreasedThirstRating","Increased Thirst Rate", thirstSummation, "{2}", OPTION_FLAG_NONE)
+                else
+                    AddSliderOptionST("EnableIncreasedThirstRating","Increased Thirst Rate", thirstSummation, "{2}", OPTION_FLAG_DISABLED)
+                endif
+
         ; ####################################################
         ; #                  Debug Page                      #
         ; ####################################################
@@ -182,92 +145,233 @@ Event OnPageReset(string page)
         SetCursorFillMode(TOP_TO_BOTTOM)
         
             AddHeaderOption("Debug Settings")
-            toggleDebugMode = AddToggleOption("Enable Debugging", isDebugEnabled) 
+            AddToggleOptionST("EnableDebugging","Enable Debugging", isDebugEnabled) 
     endif
-EndEvent
+EndFunction
 
-Event OnOptionSelect(int option)
-        ; ####################################################
-        ; #                   Main Page                      #
-        ; ####################################################
-    if (CurrentPage == "Main Page")
-            if (option == toggleMod)
-                isModEnabled = !isModEnabled
-                SetToggleOptionValue(toggleMod, isModEnabled)
-        endif
-        ; ####################################################
-        ; #                Settings Page                     #
-        ; ####################################################     
-    elseif (CurrentPage == "Settings")
-            if (option == togglePuddles)
-                isPuddles = !isPuddles
-                SetToggleOptionValue(togglePuddles, isPuddles)
-            elseif (option == togglePuddleRunoff)
-                isPuddleRunoff = !isPuddleRunoff
-                SetToggleOptionValue(togglePuddleRunoff, isPuddleRunoff)
-            elseif (option == togglePuddleFreeze)
-                isPuddleFreeze = !isPuddleFreeze
-                SetToggleOptionValue(togglePuddleFreeze, isPuddleFreeze)
-            elseif (option == togglePuddleSublimation)
-                isPuddleSublimation = !isPuddleSublimation
-                SetToggleOptionValue(togglePuddleSublimation, isPuddleSublimation)
-            elseif (option == toggleDryWells)
-                isDryWells = !isDryWells
-                SetToggleOptionValue(toggleDryWells, isDryWells)
-            elseif (option == toggleFlammableWood)
-                isFlammableWood = !isFlammableWood
-                SetToggleOptionValue(toggleFlammableWood, isFlammableWood)
-            elseif (option == toggleIncreasedThirst)
-                isThirstIncreased = !isThirstIncreased
-                    SetToggleOptionValue(toggleIncreasedThirst, isThirstIncreased)
-                int updateFlag = isSliderEnabled(isThirstIncreased)
-                    SetOptionFlags(thirstSlider, updateFlag)
-            endif
-        ; ####################################################
-        ; #                  Debug Page                      #
-        ; #################################################### 
-    elseif (CurrentPage == "Debug")
-        if (option == toggleDebugMode)
-            isDebugEnabled =!isDebugEnabled
-            SetToggleOptionValue(toggleDebugMode, isDebugEnabled)
-        endif   
-    endif
-EndEvent
+State EnableMod
+    Event OnHighlightST()
+        SetInfoText("Toggle To Enable Or Disable Dynamic Weather Effects")
+    EndEvent
 
-        ; ####################################################
-        ; #           Drop-Down Menu Functions               #
-        ; #################################################### 
-Event OnOptionMenuOpen(int option)
-    if(option == presetSelection)
-        SetMenuDialogOptions(presetsList)
+    Event OnDefaultST()
+		isModEnabled = false
+		SetToggleOptionValueST(isModEnabled)
+	EndEvent
+
+    Event OnSelectST()
+        isModEnabled = !isModEnabled
+        SetToggleOptionValueST(isModEnabled)
+    EndEvent
+EndState
+
+State PresetSelection
+    Event OnHighlightST()
+        SetInfoText("Select A Pre-Configured Preset To Load Settings From\n These Settings Can Always Be Changed If Desired")
+    EndEvent
+
+    Event OnMenuOpenSt()
         SetMenuDialogStartIndex(presetIndex)
-        SetMenuDialogDefaultIndex(2)
-    endif
-EndEvent
+        SetMenuDialogDefaultIndex(presetIndex)
+        SetMenuDialogOptions(presetsList)
+    EndEvent
 
-Event OnOptionMenuAccept(int option, int index)
-    if(option == presetSelection)
+    Event OnDefaultST()
+        presetIndex = 2
+        SetMenuOptionValueST(presetsList[presetIndex])
+    EndEvent
+
+    Event OnMenuAcceptST(int index)
         presetIndex = index
-        SetMenuOptionValue(presetSelection, presetsList[presetIndex])
-    endif
-EndEvent
+        SetMenuOptionValueST(presetsList[presetIndex])
+    EndEvent
+EndState
 
+; ToDo: Add Conditions On When Puddles Should Appear
+State EnableDynamicPuddles 
+    Event OnHighlightST()
+        SetInfoText("Enables/Disables Allowing Dynamic Puddles To Appear In Game")
+    EndEvent
 
-        ; ####################################################
-        ; #              Slider Menu Functions               #
-        ; ####################################################
-Event OnOptionSliderOpen(int option)
-    if (option == thirstSlider)
+    Event OnDefaultST()
+        isPuddles = false
+        SetToggleOptionValueST(isPuddles)
+	EndEvent
+
+    Event OnSelectST()
+        isPuddles = !isPuddles
+        SetToggleOptionValueST(isPuddles)
+            if(!isPuddles)
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnablePuddleRunoffs")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnablePuddleFreezing")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnablePuddleSublimation")
+            else 
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnablePuddleRunoffs")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnablePuddleFreezing")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnablePuddleSublimation")
+            endif
+    EndEvent
+EndState
+
+; ToDo: Add Conditions For Appearance
+State EnablePuddleRunoffs 
+    Event OnHighlightST()
+        SetInfoText("If Dynamic Puddles Is Enabled, Allows The Ability For Puddles To Overflow Terrain In Runoffs")
+    EndEvent
+
+    Event OnDefaultST()
+        ;SetOptionFlagsST(OPTION_FLAG_DISABLED)
+            isPuddleRunoff = false
+            SetToggleOptionValueST(isPuddleRunoff)
+	EndEvent
+
+    Event OnSelectST()
+        isPuddleRunoff = !isPuddleRunoff
+        SetToggleOptionValueST(isPuddleRunoff)
+    EndEvent
+EndState
+
+; ToDo: Add Conditions For Freezing
+State EnablePuddleFreezing  
+    Event OnHighlightST()
+        SetInfoText("If Dynamic Puddles Is Enabled, Allows The Ability For Puddles To Freeze Over")
+    EndEvent
+
+    Event OnDefaultST()
+            isPuddleFreeze = false
+            SetToggleOptionValueST(isPuddleFreeze)
+	EndEvent
+
+    Event OnSelectST()
+        isPuddleFreeze = !isPuddleFreeze
+        SetToggleOptionValueST(isPuddleFreeze)        
+    EndEvent
+EndState
+
+State EnablePuddleSublimation  
+    Event OnHighlightST()
+        SetInfoText("If Dynamic Puddles Is Enabled, Allows For The Ability Of Puddles To Evaporate And, Under Intense Heat, Transition To Steam")
+    EndEvent
+
+    Event OnDefaultST()
+        isPuddleSublimation = false
+        SetToggleOptionValueST(isPuddleSublimation)
+	EndEvent
+
+    Event OnSelectST()
+        isPuddleSublimation = !isPuddleSublimation
+        SetToggleOptionValueST(isPuddleSublimation)
+    EndEvent
+EndState
+
+State EnableDryWells  
+    Event OnHighlightST()
+        SetInfoText("Enables The Level Of Water In Wells To Drop\nRecommended Use With NEEDs Type Mods")
+    EndEvent
+
+    Event OnDefaultST()
+        isDryWells = false
+        SetToggleOptionValueST(isDryWells)
+	EndEvent
+
+    Event OnSelectST()
+        isDryWells = !isDryWells
+        SetToggleOptionValueST(isDryWells)
+    EndEvent
+EndState
+
+;/
+    ToDo:
+    - Add Options For Needs Mods, Such As Frostfall And Campfire
+    - Add Ability For Warmth Rating From Burning Woodpiles
+    - Add Moisture, Dryness, And Something Like Available O2 Rating
+    - More To Come
+/;
+State EnableFlammableWoodPiles
+    Event OnHighlightST()
+        SetInfoText("Enables The Ability For Wood Piles To Be Burnable")
+    EndEvent
+
+    Event OnDefaultST()
+        isFlammableWood = false
+        SetToggleOptionValueST(isFlammableWood)
+	EndEvent
+
+    Event OnSelectST()
+        isFlammableWood = !isFlammableWood
+        SetToggleOptionValueST(isFlammableWood)
+    EndEvent
+EndState
+
+;/
+    ToDo:
+    - Add Options For Needs Mods
+    - Add Options For Action-Based Thirst Rating
+/;
+State EnableIncreasedThirst
+    Event OnHighlightST()
+        SetInfoText("Enables Increased Thirst Rating In Arid And Warmer Environments\nConfigurable For Needs Mods And Actions, Such As Sprinting Increases Thirst")
+    EndEvent
+
+    Event OnDefaultST()
+        isThirstIncreased = false
+        SetToggleOptionValueST(isThirstIncreased)
+	EndEvent
+
+    Event OnSelectST()
+        isThirstIncreased = !isThirstIncreased
+        SetToggleOptionValueST(isThirstIncreased)
+            if(!isThirstIncreased)
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
+            else 
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
+            endif
+    EndEvent
+EndState
+
+;/
+    FIX: Aesthetically, After Selecting Value In Slider, Float Displays As Int On MCM
+         On Reopening Slider, Displays As Float Value Again -> Fix For Consistency
+    ToDo:
+    - Add More Sliders Similar To This One For More Customization 
+      Based On Actions, Locations, And Needs Mods
+/;
+State EnableIncreasedThirstRating
+    Event OnHighlightST()
+        SetInfoText("Locational Slider For Thirst Rating Increase For This Mod\nDoesn't Take Into Effect Needs Mods Or Action Based Thirst Rating \n[See Other Sliders For Those Rating Settings]")
+    EndEvent
+
+    Event OnSliderOpenST()
         SetSliderDialogStartValue(thirstSummation)
-        SetSliderDialogDefaultValue(50)
-        SetSliderDialogRange(0.00, 100.00)
-        SetSliderDialogInterval(0.01)
-    endif
-EndEvent
+		SetSliderDialogDefaultValue(50.0)
+		SetSliderDialogRange(0.0, 100.0)
+		SetSliderDialogInterval(0.01)
+    EndEvent
 
-Event OnOptionSliderAccept(int option, float value)
-    if (option == thirstSlider)
-        thirstSummation = value
-        SetSliderOptionValue(thirstSlider, thirstSummation, "{2}")
-    endif
-EndEvent
+    Event OnDefaultST()
+
+        thirstSummation = 50.0
+        SetSliderOptionValueST(thirstSummation)
+	EndEvent
+
+    Event OnSliderAcceptST(float sliderValue)
+        thirstSummation = sliderValue
+        SetSliderOptionValueST(thirstSummation)
+    EndEvent
+EndState
+
+State EnableDebugging
+    Event OnHighlightST()
+        SetInfoText("Enables/Disables Debugging Options")
+    EndEvent
+
+    Event OnDefaultST()
+        isDebugEnabled = false
+        SetToggleOptionValueST(isDebugEnabled)
+    EndEvent
+
+    Event OnSelectST()
+        isDebugEnabled = !isDebugEnabled
+        SetToggleOptionValueST(isDebugEnabled)
+    EndEvent
+EndState
