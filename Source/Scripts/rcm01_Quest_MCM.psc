@@ -22,16 +22,21 @@ string[] pages
 bool isModEnabled
 
 ; Settings Page Variables
-float thirstSummation = 50.0
-int  presetIndex = 2
+int  presetIndex
 bool isPuddles
 bool isPuddleRunoff
 bool isPuddleFreeze
 bool isPuddleSublimation
+
+bool isAridOptionEnabled
 bool isDryWells
 bool isFlammableWood
 bool isThirstIncreased
+bool isThirstIncreasedNeeds
 bool isThirstEnabled
+float thirstSummation
+float thirstSummationAction
+float thirstSummationNeeds
 
 ; Debug Page Variables
 bool isDebugEnabled
@@ -115,29 +120,76 @@ Function OnPageReset(string page)
                 AddToggleOptionST("EnablePuddleSublimation","Enable Puddle Sublimation", isPuddleSublimation, OPTION_FLAG_DISABLED)
             endif
 
-         SetCursorPosition(1)
-         AddHeaderOption("Arid Weather Effects")
+            SetCursorPosition(1)
+            AddHeaderOption("Arid Weather Effects")
             
             SetCursorPosition(3)
-            ; Wells Will Dynamically Dry Up if The Region Doesn't Experience Frequent Rain Storms And The Weather Is Too Hot
-            AddToggleOptionST("EnableDryWells","Enable Dry Wells", isDryWells)
+            AddToggleOptionST("EnableAridWeatherEffects", "Enables Arid/Warm Weather Effects",  isAridOptionEnabled)
             
-            SetCursorPosition(5)          
-            ; Chance To Burn if Fire Magic, Dragon Fire, Or Torched
-            AddToggleOptionST("EnableFlammableWoodPiles","Enable Flammable Woodpiles", isFlammableWood) 
-           
-            SetCursorPosition(7)            
-            ; if Needs Mod Enabled, Slightly Increases Thirst Rate
-            AddToggleOptionST("EnableIncreasedThirst","Enable Increased Thirst", isThirstIncreased)
+            SetCursorPosition(5)            
+            AddEmptyOption()
 
+            SetCursorPosition(7)
+            AddHeaderOption("Basic Arid Effects")
+            
+            ; Honestly, Could Go About This WHOLE Section Just By Doing ONE if else Switch And Set The Cursor Position For Each Option In That Switch...
             SetCursorPosition(9)
+            ; Wells Will Dynamically Dry Up if The Region Doesn't Experience Frequent Rain Storms And The Weather Is Too Hot
+            if(isAridOptionEnabled)
+                AddToggleOptionST("EnableDryWells","Enable Dry Wells", isDryWells, OPTION_FLAG_NONE)
+            else
+                AddToggleOptionST("EnableDryWells","Enable Dry Wells", isDryWells, OPTION_FLAG_DISABLED)
+            endif
+
+            SetCursorPosition(11)          
+            ; Chance To Burn if Fire Magic, Dragon Fire, Or Torched
+            if(isAridOptionEnabled)
+                AddToggleOptionST("EnableFlammableWoodPiles","Enable Flammable Woodpiles", isFlammableWood, OPTION_FLAG_NONE) 
+           else
+                AddToggleOptionST("EnableFlammableWoodPiles","Enable Flammable Woodpiles", isFlammableWood, OPTION_FLAG_DISABLED) 
+            endif
+
+            SetCursorPosition(13)            
+            AddHeaderOption("Thirst Rating Settings")
+
+            SetCursorPosition(15)            
+            if(isAridOptionEnabled)
+                AddToggleOptionST("EnableIncreasedThirst","Enable Increased Thirst", isThirstIncreased, OPTION_FLAG_NONE)
+            else
+                AddToggleOptionST("EnableIncreasedThirst","Enable Increased Thirst", isThirstIncreased, OPTION_FLAG_DISABLED)
+            endif
+
+             SetCursorPosition(17)            
+            ; if Needs Mod Enabled, Slightly Increases Thirst Rate
+            if(isAridOptionEnabled)
+                AddToggleOptionST("EnableIncreasedThirstForNeeds","Enable Increased Thirst For Needs Mods", isThirstIncreasedNeeds, OPTION_FLAG_NONE)
+            else
+                AddToggleOptionST("EnableIncreasedThirstForNeeds","Enable Increased Thirst For Needs Mods", isThirstIncreasedNeeds, OPTION_FLAG_DISABLED)
+            endif
+
+            SetCursorPosition(19)
             ; Adds A Multiplier Slider if Increased Thirst Is Enabled
                 if (isThirstIncreased)
-                    AddSliderOptionST("EnableIncreasedThirstRating","Increased Thirst Rate", thirstSummation, "{2}", OPTION_FLAG_NONE)
+                    AddSliderOptionST("EnableIncreasedThirstRating","Base Increased Thirst Multiplier", thirstSummation, "{2}", OPTION_FLAG_NONE)
                 else
-                    AddSliderOptionST("EnableIncreasedThirstRating","Increased Thirst Rate", thirstSummation, "{2}", OPTION_FLAG_DISABLED)
+                    AddSliderOptionST("EnableIncreasedThirstRating","Base Increased Thirst Multiplier", thirstSummation, "{2}", OPTION_FLAG_DISABLED)
                 endif
 
+             SetCursorPosition(21)
+            ; Adds A Multiplier Slider if Increased Thirst Is Enabled
+                if (isThirstIncreased)
+                    AddSliderOptionST("EnableIncreasedThirstRatingAction","Increased Thirst For Actions Multiplier", thirstSummationAction, "{2}", OPTION_FLAG_NONE)
+                else
+                    AddSliderOptionST("EnableIncreasedThirstRatingAction","Increased Thirst For Actions Multiplier", thirstSummationAction, "{2}", OPTION_FLAG_DISABLED)
+                endif
+
+            SetCursorPosition(23)
+            ; Adds A Multiplier Slider if Increased Thirst Is Enabled
+                if (isThirstIncreasedNeeds)
+                    AddSliderOptionST("EnableIncreasedThirstRatingForNeeds","Increased Thirst Needs Mod Multiplier", thirstSummationNeeds, "{2}", OPTION_FLAG_NONE)
+                else
+                    AddSliderOptionST("EnableIncreasedThirstRatingForNeeds","Increased Thirst Needs Mod Multiplier", thirstSummationNeeds, "{2}", OPTION_FLAG_DISABLED)
+                endif
         ; ####################################################
         ; #                  Debug Page                      #
         ; ####################################################
@@ -213,6 +265,36 @@ State EnableDynamicPuddles
     EndEvent
 EndState
 
+State EnableAridWeatherEffects 
+    Event OnHighlightST()
+        SetInfoText("Enables/Disables The Below Arid/Warm Weather Effects")
+    EndEvent
+
+    Event OnDefaultST()
+        isAridOptionEnabled = false
+        SetToggleOptionValueST(isAridOptionEnabled)
+	EndEvent
+
+    Event OnSelectST() 
+        isAridOptionEnabled = !isAridOptionEnabled
+        SetToggleOptionValueST(isAridOptionEnabled)
+            if(!isAridOptionEnabled) 
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableDryWells")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableFlammableWoodPiles")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirst")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstForNeeds")
+            else 
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableDryWells")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableFlammableWoodPiles")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirst")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstForNeeds")
+            endif
+    EndEvent
+EndState
+
+
+
 ; ToDo: Add Conditions For Appearance
 State EnablePuddleRunoffs 
     Event OnHighlightST()
@@ -220,7 +302,6 @@ State EnablePuddleRunoffs
     EndEvent
 
     Event OnDefaultST()
-        ;SetOptionFlagsST(OPTION_FLAG_DISABLED)
             isPuddleRunoff = false
             SetToggleOptionValueST(isPuddleRunoff)
 	EndEvent
@@ -287,6 +368,10 @@ EndState
     - Add Moisture, Dryness, And Something Like Available O2 Rating
     - More To Come
 /;
+
+
+
+
 State EnableFlammableWoodPiles
     Event OnHighlightST()
         SetInfoText("Enables The Ability For Wood Piles To Be Burnable")
@@ -303,11 +388,6 @@ State EnableFlammableWoodPiles
     EndEvent
 EndState
 
-;/
-    ToDo:
-    - Add Options For Needs Mods
-    - Add Options For Action-Based Thirst Rating
-/;
 State EnableIncreasedThirst
     Event OnHighlightST()
         SetInfoText("Enables Increased Thirst Rating In Arid And Warmer Environments\nConfigurable For Needs Mods And Actions, Such As Sprinting Increases Thirst")
@@ -323,18 +403,43 @@ State EnableIncreasedThirst
         SetToggleOptionValueST(isThirstIncreased)
             if(!isThirstIncreased)
                 SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingAction")
             else 
                 SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingAction")
             endif
     EndEvent
 EndState
 
+State EnableIncreasedThirstForNeeds
+    Event OnHighlightST()
+        SetInfoText("Enables Increased Thirst Rating For Needs Type Mods\nIf Enabled, Disbables This Mod's Base Thirst Muliplier In Favor Of Needs Type Multiplier")
+    EndEvent
+
+    Event OnDefaultST()
+        isThirstIncreasedNeeds = false
+        SetToggleOptionValueST(isThirstIncreasedNeeds)
+	EndEvent
+
+    Event OnSelectST()
+        isThirstIncreasedNeeds = !isThirstIncreasedNeeds
+        SetToggleOptionValueST(isThirstIncreasedNeeds)
+            if(!isThirstIncreasedNeeds)
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirst")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingForNeeds")
+            else 
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirst")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingForNeeds")
+            endif
+    EndEvent
+EndState
+
+
 ;/
     FIX: Aesthetically, After Selecting Value In Slider, Float Displays As Int On MCM
          On Reopening Slider, Displays As Float Value Again -> Fix For Consistency
-    ToDo:
-    - Add More Sliders Similar To This One For More Customization 
-      Based On Actions, Locations, And Needs Mods
 /;
 State EnableIncreasedThirstRating
     Event OnHighlightST()
@@ -343,20 +448,68 @@ State EnableIncreasedThirstRating
 
     Event OnSliderOpenST()
         SetSliderDialogStartValue(thirstSummation)
-		SetSliderDialogDefaultValue(50.0)
-		SetSliderDialogRange(0.0, 100.0)
+		SetSliderDialogDefaultValue(50.00)
+		SetSliderDialogRange(0.00, 500.00)
 		SetSliderDialogInterval(0.01)
     EndEvent
 
     Event OnDefaultST()
 
-        thirstSummation = 50.0
+        thirstSummation = 50.00
         SetSliderOptionValueST(thirstSummation)
 	EndEvent
 
     Event OnSliderAcceptST(float sliderValue)
         thirstSummation = sliderValue
         SetSliderOptionValueST(thirstSummation)
+    EndEvent
+EndState
+
+State EnableIncreasedThirstRatingAction
+    Event OnHighlightST()
+        SetInfoText("Action Based Slider For Thirst Rating Increase For This Mod\n Set To 0 To Disable, Otherwise, Adds A Thirst Rating To Actions Such As Running, Swimming, Attacking, etc")
+    EndEvent
+
+    Event OnSliderOpenST()
+        SetSliderDialogStartValue(thirstSummationAction)
+		SetSliderDialogDefaultValue(15.00)
+		SetSliderDialogRange(0.00, 500.00)
+		SetSliderDialogInterval(0.01)
+    EndEvent
+
+    Event OnDefaultST()
+
+        thirstSummationAction = 15.00
+        SetSliderOptionValueST(thirstSummationAction)
+	EndEvent
+
+    Event OnSliderAcceptST(float sliderValue)
+        thirstSummationAction = sliderValue
+        SetSliderOptionValueST(thirstSummationAction)
+    EndEvent
+EndState
+
+State EnableIncreasedThirstRatingForNeeds
+    Event OnHighlightST()
+        SetInfoText("Slider For Thirst Rating Increase For Needs Mods\n Set To 0 To Disable, Otherwise, Adds A Thirst Rating Multiplier To Needs Type Thirst System")
+    EndEvent
+
+    Event OnSliderOpenST()
+        SetSliderDialogStartValue(thirstSummationNeeds)
+		SetSliderDialogDefaultValue(15.00)
+		SetSliderDialogRange(0.00, 500.00)
+		SetSliderDialogInterval(0.01)
+    EndEvent
+
+    Event OnDefaultST()
+
+        thirstSummationNeeds = 15.00
+        SetSliderOptionValueST(thirstSummationNeeds)
+	EndEvent
+
+    Event OnSliderAcceptST(float sliderValue)
+        thirstSummationNeeds = sliderValue
+        SetSliderOptionValueST(thirstSummationNeeds)
     EndEvent
 EndState
 
