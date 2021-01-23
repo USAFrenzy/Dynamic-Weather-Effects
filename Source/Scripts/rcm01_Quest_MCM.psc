@@ -1,4 +1,4 @@
-Scriptname MCM:rcm01_Quest_MCM extends SKI_ConfigBase
+Scriptname rcm01_Quest_MCM extends SKI_ConfigBase
 
 
 ; ##########################
