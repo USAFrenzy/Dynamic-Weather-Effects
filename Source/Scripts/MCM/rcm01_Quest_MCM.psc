@@ -1,4 +1,4 @@
-Scriptname rcm01_Quest_MCM extends SKI_ConfigBase
+Scriptname MCM:rcm01_Quest_MCM extends SKI_ConfigBase
 
 
 ; ##########################
@@ -12,7 +12,6 @@ EndFunction
 ; #  Variable Forward Declarations  
 ; ##################################
 string[] presetsList
-string[] pages
 
 ; ###########################
 ; # Variable State Values
