@@ -1,0 +1,17 @@
+<?xml version='1.0'?><!-- Game is either sse, tesv, or fo4 -->
+<PapyrusProject xmlns="PapyrusProject.xsd" 
+    Flags="TESV_Papyrus_Flags.flg" 
+    Game="sse" 
+    Output="Scripts" 
+    Optimize="false" 
+    Release="false" 
+    Final="false">
+    <Imports>
+        <Import>.\Source\Scripts</Import>
+        <Import>D:\Steam\steamapps\common\Skyrim Special Edition\Data\Source\Scripts</Import>
+        <Import>E:\Frameworks\Skyrim Frameworks\skse64_2_00_19\Data\Scripts\Source</Import>
+    </Imports>
+    <Folders>
+        <Folder>.\Source\Scripts</Folder>
+    </Folders>
+</PapyrusProject>

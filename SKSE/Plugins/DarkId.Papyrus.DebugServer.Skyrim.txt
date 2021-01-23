@@ -1,0 +1,5 @@
+Plugin For VsCode
+- Enables Papyrus Debug Support Via The Papyrus Language Extension
+- Game Must Be Running, Set A Breakpoint In VsCode Script File
+  When The Breakpoint Is Hit, Game Pauses Execution And 
+  Communicates With VsCode For Debugging Purposes
