@@ -33,9 +33,9 @@ bool isFlammableWood
 bool isThirstIncreased
 bool isThirstIncreasedNeeds
 bool isThirstEnabled
-float thirstSummation
-float thirstSummationAction
-float thirstSummationNeeds
+float thirstSummation = 15.0
+float thirstSummationAction = 15.0
+float thirstSummationNeeds = 15.0
 
 ; Debug Page Variables
 bool isDebugEnabled
@@ -168,7 +168,7 @@ Function OnPageReset(string page)
 
             SetCursorPosition(19)
             ; Adds A Multiplier Slider if Increased Thirst Is Enabled
-                if (isThirstIncreased)
+                if (isAridOptionEnabled)
                     AddSliderOptionST("EnableIncreasedThirstRating","Base Increased Thirst Multiplier", thirstSummation, "{2}", OPTION_FLAG_NONE)
                 else
                     AddSliderOptionST("EnableIncreasedThirstRating","Base Increased Thirst Multiplier", thirstSummation, "{2}", OPTION_FLAG_DISABLED)
@@ -176,7 +176,7 @@ Function OnPageReset(string page)
 
              SetCursorPosition(21)
             ; Adds A Multiplier Slider if Increased Thirst Is Enabled
-                if (isThirstIncreased)
+                if (isAridOptionEnabled)
                     AddSliderOptionST("EnableIncreasedThirstRatingAction","Increased Thirst For Actions Multiplier", thirstSummationAction, "{2}", OPTION_FLAG_NONE)
                 else
                     AddSliderOptionST("EnableIncreasedThirstRatingAction","Increased Thirst For Actions Multiplier", thirstSummationAction, "{2}", OPTION_FLAG_DISABLED)
@@ -184,7 +184,7 @@ Function OnPageReset(string page)
 
             SetCursorPosition(23)
             ; Adds A Multiplier Slider if Increased Thirst Is Enabled
-                if (isThirstIncreasedNeeds)
+                if (isAridOptionEnabled)
                     AddSliderOptionST("EnableIncreasedThirstRatingForNeeds","Increased Thirst Needs Mod Multiplier", thirstSummationNeeds, "{2}", OPTION_FLAG_NONE)
                 else
                     AddSliderOptionST("EnableIncreasedThirstRatingForNeeds","Increased Thirst Needs Mod Multiplier", thirstSummationNeeds, "{2}", OPTION_FLAG_DISABLED)
@@ -213,6 +213,11 @@ State EnableMod
     Event OnSelectST()
         isModEnabled = !isModEnabled
         SetToggleOptionValueST(isModEnabled)
+            if(!isModEnabled)
+                Debug.MessageBox("Dynamic Weather Effects Disabled\nPlease Close MCM For Changes To Take Effect.")
+            else 
+                Debug.MessageBox("Dynamic Weather Effects Enabled\nPlease Close MCM For Changes To Take Effect.")
+            endif
     EndEvent
 EndState
 
@@ -277,17 +282,23 @@ State EnableAridWeatherEffects
     Event OnSelectST() 
         isAridOptionEnabled = !isAridOptionEnabled
         SetToggleOptionValueST(isAridOptionEnabled)
+            ; For All Arid Toggle Options ------------------------------------------------------------
             if(!isAridOptionEnabled) 
                 SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableDryWells")
                 SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableFlammableWoodPiles")
                 SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirst")
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
                 SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstForNeeds")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingForNeeds")
+                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingAction")
             else 
                 SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableDryWells")
                 SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableFlammableWoodPiles")
                 SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirst")
                 SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstForNeeds")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingForNeeds")
+                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingAction")
             endif
     EndEvent
 EndState
@@ -400,13 +411,9 @@ State EnableIncreasedThirst
     Event OnSelectST()
         isThirstIncreased = !isThirstIncreased
         SetToggleOptionValueST(isThirstIncreased)
-            if(!isThirstIncreased)
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingAction")
-            else 
-                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
-                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingAction")
-            endif
+        if(isThirstIncreased && isThirstIncreasedNeeds)
+            Debug.MessageBox("You Have Both The Base Mod's Increased Thirst And The Needs Compatible Thirst Enabled.\n Recommend Disabling One Unless You Want Death By Hardcore Dehydration!\n(Optionally, You Could Leave Both On And Adjust The Base Mod's Sliders To A Low Value)")
+        endif
     EndEvent
 EndState
 
@@ -419,19 +426,13 @@ State EnableIncreasedThirstForNeeds
         isThirstIncreasedNeeds = false
         SetToggleOptionValueST(isThirstIncreasedNeeds)
 	EndEvent
-
+    
     Event OnSelectST()
         isThirstIncreasedNeeds = !isThirstIncreasedNeeds
         SetToggleOptionValueST(isThirstIncreasedNeeds)
-            if(!isThirstIncreasedNeeds)
-                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirst")
-                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRating")
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRatingForNeeds")
-            else 
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirst")
-                SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "EnableIncreasedThirstRating")
-                SetOptionFlagsST(OPTION_FLAG_NONE, false, "EnableIncreasedThirstRatingForNeeds")
-            endif
+        if(isThirstIncreased && isThirstIncreasedNeeds)
+            Debug.MessageBox("You Have Both The Base Mod's Increased Thirst And The Needs Compatible Thirst Enabled.\n Recommend Disabling One Unless You Want Death By Hardcore Dehydration!\n(Optionally, You Could Leave Both On And Adjust The Base Mod's Sliders To A Low Value)")
+        endif
     EndEvent
 EndState
 
@@ -453,14 +454,13 @@ State EnableIncreasedThirstRating
     EndEvent
 
     Event OnDefaultST()
-
         thirstSummation = 50.00
         SetSliderOptionValueST(thirstSummation)
 	EndEvent
 
     Event OnSliderAcceptST(float sliderValue)
         thirstSummation = sliderValue
-        SetSliderOptionValueST(thirstSummation)
+        SetSliderOptionValueST(thirstSummation, "{2}")
     EndEvent
 EndState
 
@@ -484,7 +484,7 @@ State EnableIncreasedThirstRatingAction
 
     Event OnSliderAcceptST(float sliderValue)
         thirstSummationAction = sliderValue
-        SetSliderOptionValueST(thirstSummationAction)
+        SetSliderOptionValueST(thirstSummationAction, "{2}")
     EndEvent
 EndState
 
@@ -501,14 +501,13 @@ State EnableIncreasedThirstRatingForNeeds
     EndEvent
 
     Event OnDefaultST()
-
         thirstSummationNeeds = 15.00
         SetSliderOptionValueST(thirstSummationNeeds)
 	EndEvent
 
     Event OnSliderAcceptST(float sliderValue)
         thirstSummationNeeds = sliderValue
-        SetSliderOptionValueST(thirstSummationNeeds)
+        SetSliderOptionValueST(thirstSummationNeeds, "{2}")
     EndEvent
 EndState
 
@@ -525,5 +524,28 @@ State EnableDebugging
     Event OnSelectST()
         isDebugEnabled = !isDebugEnabled
         SetToggleOptionValueST(isDebugEnabled)
+            if(isDebugEnabled)
+                Utility.SetINIBool("bRandomSetting:Papyrus", true)
+                Utility.SetINIBool("bRandomSetting:Papyrus", true)
+                Utility.SetINIBool("bRandomSetting:Papyrus", true)
+                Utility.SetINIBool("bRandomSetting:Papyrus", true)
+
+                    Debug.MessageBox("Debugging Disabled")
+                        Debug.Notification(Utility.GetINIBool("bEnableLogging:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bEnableNotification:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bLoadDebugInformation:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bEnableProfiling:Papyrus"))
+            else
+                Utility.SetINIBool("bEnableLogging:Papyrus", false)
+                Utility.SetINIBool("bEnableNotification:Papyrus", false)
+                Utility.SetINIBool("bLoadDebugInformation:Papyrus", false)
+                Utility.SetINIBool("bEnableProfiling:Papyrus", false)
+
+                    Debug.MessageBox("Debugging Enabled")
+                        Debug.Notification(Utility.GetINIBool("bEnableLogging:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bEnableNotification:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bLoadDebugInformation:Papyrus"))
+                        Debug.Notification(Utility.GetINIBool("bEnableProfiling:Papyrus"))
+            endif
     EndEvent
 EndState
