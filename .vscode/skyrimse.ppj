@@ -1,17 +1,18 @@
-<?xml version='1.0'?><!-- Game is either sse, tesv, or fo4 -->
+<?xml version='1.0'?>
+<!-- NOTE(Ryan): Change Optimize, Package, And Zip Settings When Project Finished -->
 <PapyrusProject xmlns="PapyrusProject.xsd" 
     Flags="TESV_Papyrus_Flags.flg" 
     Game="sse" 
-    Output="Scripts" 
-    Optimize="false" 
-    Release="false" 
-    Final="false">
+    Output="..\Scripts" 
+    Optimize="false"
+    Anonymize="true"
+    Package="false"
+    Zip="false"> 
     <Imports>
-        <Import>.\Source\Scripts</Import>
+        <Import>D:\Mod Organizer 2 Lexys LOTD SE\mods\SKSE Scripts</Import>
         <Import>D:\Steam\steamapps\common\Skyrim Special Edition\Data\Source\Scripts</Import>
-        <Import>E:\Frameworks\Skyrim Frameworks\skse64_2_00_19\Data\Scripts\Source</Import>
     </Imports>
     <Folders>
-        <Folder>.\Source\Scripts</Folder>
+        <Folder>..\Source\Scripts</Folder>
     </Folders>
 </PapyrusProject>
