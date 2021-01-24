@@ -377,26 +377,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/RelWithDebInfo/cmake_pch.hxx</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/ExampleProject.dir/RelWithDebInfo/cmake_pch.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClInclude Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.h" />
     <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\main.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/ExampleProject.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/ExampleProject.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/MinSizeRel/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/ExampleProject.dir/MinSizeRel/cmake_pch.pch</PrecompiledHeaderOutputFile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/RelWithDebInfo/cmake_pch.hxx</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/ExampleProject.dir/RelWithDebInfo/cmake_pch.pch</PrecompiledHeaderOutputFile>
-    </ClCompile>
-    <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Frameworks/Skyrim Frameworks/ExamplePlugin-CommonLibSSE/build/CMakeFiles/ExampleProject.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>

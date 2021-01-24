@@ -7,14 +7,6 @@
     <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.h">
-      <Filter>src</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\build\version.rc">
