@@ -3,18 +3,51 @@
 
 namespace DynamicWeatherEffects {
 	// Should Check The World Space (Possibly Cell Records?) And Return The World Space To Register If Valid
-	float RegisterWorldSpace(StaticFunctionTag* base, UInt32 newWorldSpace)
+	TESForm* RegisterWorldSpace(TESForm* WorldSpace, TESForm* newWorldSpace)
 	{
 		// Implement Something Like Searching Through A Form List For WorldSpaces
 		// And If Valid WorldSpace, Return WorldSpace, Else, Throw An Error?
+        return newWorldSpace;
 	}
 
-
-	// Implement A Way To Register Functions - As static_cast Is Stating, As This Is Right Now, It Won't Work
-	bool RegisterFunctions(VMClassRegistry* registry)
+	// Implement A Way To Register For Events
+	bool RegisterEvents(VMClassRegistry* registry)
 	{
-		// registry->RegisterFunction(static_cast<IFunction*>(DynamicWeatherEffects::RegisterWorldSpace));
-
+		// Do Stuff
 		return true;
 	}
+
+	// Implement A Way To Register Functions - Haven't Tested This Yet
+	bool RegisterFunctions(VMClassRegistry* registry)
+	{
+		/*
+		  registry->RegisterFunction(new NativeFunction1<TESForm, TESForm>("RegisterWorldSpace",
+		  "DynamicWeatherWorldSpace", DynamicWeatherEffects::RegisterWorldSpace, registry));
+		*/
+		// Might Want Some Error Checking Here
+		return true;
+	}
+
+	namespace Serialization {
+
+		void Serialization_Revert(SKSESerializationInterface* skse)
+		{
+			// Do Stuff
+		}
+
+
+		void Serialization_Save(SKSESerializationInterface* skse)
+		{
+			// Do Stuff
+		}
+
+
+		void Serialization_Load(SKSESerializationInterface* skse)
+		{
+			// Do Stuff
+		}
+
+	} // namespace Serialization
+
+
 } // namespace DynamicWeatherEffects

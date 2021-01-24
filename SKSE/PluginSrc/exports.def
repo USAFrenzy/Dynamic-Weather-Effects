@@ -1,0 +1,4 @@
+LIBRARY	"Dynamic Weather Effects"
+EXPORTS
+SKSEPlugin_Query
+SKSEPlugin_Load
