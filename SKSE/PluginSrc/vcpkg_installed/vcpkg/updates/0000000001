@@ -1,0 +1,8 @@
+Package: boost-uninstall
+Version: 1.75.0
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: 8d0d600ee7b128eb318b3ffe88370519abc7e544
+Description: boost uninstall port
+Type: Port
+Status: install ok installed

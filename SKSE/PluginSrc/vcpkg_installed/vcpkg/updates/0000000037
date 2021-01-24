@@ -1,0 +1,8 @@
+Package: span-lite
+Version: 0.9.0
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: c506140f68f5e2ff935a890b5b56251b9bde042b
+Description: A C++20-like span for C++98, C++11 and later in a single-file header-only library
+Type: Port
+Status: install ok installed

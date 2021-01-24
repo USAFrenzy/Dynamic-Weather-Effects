@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonLibSSE", "CommonLibSSE\CommonLibSSE.vcxproj", "{AC06F159-60F3-3879-B06C-1B8995F8DA6A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicWeatherEffects", "DynamicWeatherEffects.vcxproj", "{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		MinSizeRel|x64 = MinSizeRel|x64
+		Release|x64 = Release|x64
+		RelWithDebInfo|x64 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.Debug|x64.ActiveCfg = Debug|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.Debug|x64.Build.0 = Debug|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.Release|x64.ActiveCfg = Release|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.Release|x64.Build.0 = Release|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{AC06F159-60F3-3879-B06C-1B8995F8DA6A}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.Debug|x64.ActiveCfg = Debug|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.Debug|x64.Build.0 = Debug|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.Release|x64.ActiveCfg = Release|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.Release|x64.Build.0 = Release|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{01E53DB3-6F25-3C2C-9CE7-B8CFB15B2F35}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0CAAC314-8185-340B-9863-EF6B0FA55F20}
+	EndGlobalSection
+EndGlobal

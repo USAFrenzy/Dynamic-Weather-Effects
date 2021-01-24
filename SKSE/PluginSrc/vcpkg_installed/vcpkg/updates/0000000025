@@ -1,0 +1,9 @@
+Package: boost-throw-exception
+Version: 1.75.0
+Depends: boost-assert, boost-config, boost-vcpkg-helpers
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: 7c97940c6e2235145e4486983cb660480a543098
+Description: Boost throw_exception module
+Type: Port
+Status: install ok installed

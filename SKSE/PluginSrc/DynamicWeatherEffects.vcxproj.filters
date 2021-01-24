@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\build\CMakeFiles\ExampleProject.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\src\PCH.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="E:\Frameworks\Skyrim Frameworks\ExamplePlugin-CommonLibSSE\build\version.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{06F21B8B-D537-39F5-8351-09B4D8873D4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{FFA9BF97-798E-3121-91D7-AF9E9B8AA20E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-format" />
+    <None Include=".gitignore" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+Package: boost-config
+Version: 1.75.0
+Depends: boost-compatibility, boost-vcpkg-helpers
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: 459eb9ff834af3ab8cddfba439e74297e34a59da
+Description: Boost config module
+Type: Port
+Status: install ok half-installed

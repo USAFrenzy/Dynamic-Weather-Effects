@@ -1,0 +1,9 @@
+Package: boost-modular-build-helper
+Version: 1.75.0
+Port-Version: 2
+Depends: boost-uninstall
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: f033417e987643ef753a6807d8084b64fd2fe26e
+Type: Port
+Status: install ok half-installed
