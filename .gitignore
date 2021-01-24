@@ -3,3 +3,8 @@ Dynamic Weather Effects.esp
 Source/Scripts/temp/
 .vs/
 SKSE\PluginSrc\vendor
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
