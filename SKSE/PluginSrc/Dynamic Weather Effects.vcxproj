@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{b61ca32c-850a-4f28-b6ae-a961361698d2}</ProjectGuid>
+    <RootNamespace>DynamicWeatherEffects</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Plugin\\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Plugin\\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\Mod Organizer 2 Lexys LOTD SE\mods\Dynamic Weather Effects %28Mod Creation WIP%29\SKSE\PluginSrc\vendor\common;D:\Mod Organizer 2 Lexys LOTD SE\mods\Dynamic Weather Effects %28Mod Creation WIP%29\SKSE\PluginSrc\vendor\skse64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\Mod Organizer 2 Lexys LOTD SE\mods\Dynamic Weather Effects %28Mod Creation WIP%29\SKSE\PluginSrc\vendor\common;D:\Mod Organizer 2 Lexys LOTD SE\mods\Dynamic Weather Effects %28Mod Creation WIP%29\SKSE\PluginSrc\vendor\skse64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DynamicPlugin.h" />
+    <ClInclude Include="vendor\common\IArchive.h" />
+    <ClInclude Include="vendor\common\IBufferStream.h" />
+    <ClInclude Include="vendor\common\IConsole.h" />
+    <ClInclude Include="vendor\common\ICriticalSection.h" />
+    <ClInclude Include="vendor\common\IDatabase.h" />
+    <ClInclude Include="vendor\common\IDataStream.h" />
+    <ClInclude Include="vendor\common\IDebugLog.h" />
+    <ClInclude Include="vendor\common\IDirectoryIterator.h" />
+    <ClInclude Include="vendor\common\IDynamicCreate.h" />
+    <ClInclude Include="vendor\common\IErrors.h" />
+    <ClInclude Include="vendor\common\IEvent.h" />
+    <ClInclude Include="vendor\common\IFIFO.h" />
+    <ClInclude Include="vendor\common\IFileStream.h" />
+    <ClInclude Include="vendor\common\IInterlockedLong.h" />
+    <ClInclude Include="vendor\common\ILinkedList.h" />
+    <ClInclude Include="vendor\common\IMemPool.h" />
+    <ClInclude Include="vendor\common\IMutex.h" />
+    <ClInclude Include="vendor\common\IPipeClient.h" />
+    <ClInclude Include="vendor\common\IPipeServer.h" />
+    <ClInclude Include="vendor\common\IPrefix.h" />
+    <ClInclude Include="vendor\common\IRangeMap.h" />
+    <ClInclude Include="vendor\common\IReadWriteLock.h" />
+    <ClInclude Include="vendor\common\ISegmentStream.h" />
+    <ClInclude Include="vendor\common\ISingleton.h" />
+    <ClInclude Include="vendor\common\ITextParser.h" />
+    <ClInclude Include="vendor\common\IThread.h" />
+    <ClInclude Include="vendor\common\ITimer.h" />
+    <ClInclude Include="vendor\common\ITypes.h" />
+    <ClInclude Include="vendor\skse64\skse64\BSModelDB.h" />
+    <ClInclude Include="vendor\skse64\skse64\Colors.h" />
+    <ClInclude Include="vendor\skse64\skse64\CustomMenu.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameAPI.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameBSExtraData.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameCamera.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameData.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameEvents.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameExtraData.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameFormComponents.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameForms.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameHandlers.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameInput.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameMenus.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameObjects.h" />
+    <ClInclude Include="vendor\skse64\skse64\GamePathing.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameReferences.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameResources.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameRTTI.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameSettings.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameStreams.h" />
+    <ClInclude Include="vendor\skse64\skse64\gamethreads.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameTypes.h" />
+    <ClInclude Include="vendor\skse64\skse64\GameUtilities.h" />
+    <ClInclude Include="vendor\skse64\skse64\GlobalLocks.h" />
+    <ClInclude Include="vendor\skse64\skse64\HashUtil.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Camera.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Data.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Debug.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Diagnostics.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_DirectInput8Create.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Event.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Gameplay.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Handlers.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Memory.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_NetImmerse.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_ObScript.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Papyrus.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_SaveLoad.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Scaleform.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_Threads.h" />
+    <ClInclude Include="vendor\skse64\skse64\Hooks_UI.h" />
+    <ClInclude Include="vendor\skse64\skse64\InputMap.h" />
+    <ClInclude Include="vendor\skse64\skse64\InternalSerialization.h" />
+    <ClInclude Include="vendor\skse64\skse64\InternalTasks.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiAdditionalGeometryData.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiControllers.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiExtraData.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiGeometry.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiInterpolators.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiLight.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiMaterial.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiNodes.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiObjects.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiProperties.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiRenderer.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiRTTI.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiSerialization.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiTextures.h" />
+    <ClInclude Include="vendor\skse64\skse64\NiTypes.h" />
+    <ClInclude Include="vendor\skse64\skse64\ObScript.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusActiveMagicEffect.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusActor.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusActorBase.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusActorValueInfo.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusAlias.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusAmmo.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusArgs.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusArmor.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusArmorAddon.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusArt.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusBook.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusCamera.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusCell.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusClass.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusColorForm.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusCombatStyle.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusConstructibleObject.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusDefaultObjectManager.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusDelayFunctors.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusEnchantment.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusEquipSlot.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusEventFunctor.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusEvents.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusFaction.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusFlora.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusForm.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusFormList.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusGame.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusGameData.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusHeadPart.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusIngredient.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusInput.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusInterfaces.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusKeyword.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusLeveledActor.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusLeveledItem.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusLeveledSpell.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusLocation.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusMagicEffect.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusMath.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusMisc.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusModEvent.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusNativeFunctions.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusNetImmerse.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusObjectReference.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusObjects.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusPerk.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusPotion.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusQuest.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusRace.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusReferenceAlias.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusScroll.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusShout.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusSKSE.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusSound.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusSoundDescriptor.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusSpawnerTask.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusSpell.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusStringUtil.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusTextureSet.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusTree.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusUI.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusUICallback.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusUtility.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusValue.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusVM.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusWeapon.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusWeather.h" />
+    <ClInclude Include="vendor\skse64\skse64\PapyrusWornObject.h" />
+    <ClInclude Include="vendor\skse64\skse64\PluginAPI.h" />
+    <ClInclude Include="vendor\skse64\skse64\PluginManager.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformAPI.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformCallbacks.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformExtendedData.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformLoader.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformMovie.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformState.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformTypes.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformValue.h" />
+    <ClInclude Include="vendor\skse64\skse64\ScaleformVM.h" />
+    <ClInclude Include="vendor\skse64\skse64\Serialization.h" />
+    <ClInclude Include="vendor\skse64\skse64\Translation.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\BranchTrampoline.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\HashUtil.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\Relocation.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\SafeWrite.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\skse_version.h" />
+    <ClInclude Include="vendor\skse64\skse64_common\Utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DynamicPlugin.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="vendor\common\IArchive.cpp" />
+    <ClCompile Include="vendor\common\IBufferStream.cpp" />
+    <ClCompile Include="vendor\common\IConsole.cpp" />
+    <ClCompile Include="vendor\common\IDatabase.cpp" />
+    <ClCompile Include="vendor\common\IDataStream.cpp" />
+    <ClCompile Include="vendor\common\IDebugLog.cpp" />
+    <ClCompile Include="vendor\common\IDirectoryIterator.cpp" />
+    <ClCompile Include="vendor\common\IDynamicCreate.cpp" />
+    <ClCompile Include="vendor\common\IErrors.cpp" />
+    <ClCompile Include="vendor\common\IEvent.cpp" />
+    <ClCompile Include="vendor\common\IFIFO.cpp" />
+    <ClCompile Include="vendor\common\IFileStream.cpp" />
+    <ClCompile Include="vendor\common\IInterlockedLong.cpp" />
+    <ClCompile Include="vendor\common\IMemPool.cpp" />
+    <ClCompile Include="vendor\common\IMutex.cpp" />
+    <ClCompile Include="vendor\common\IPipeClient.cpp" />
+    <ClCompile Include="vendor\common\IPipeServer.cpp" />
+    <ClCompile Include="vendor\common\IPrefix.cpp" />
+    <ClCompile Include="vendor\common\IRangeMap.cpp" />
+    <ClCompile Include="vendor\common\IReadWriteLock.cpp" />
+    <ClCompile Include="vendor\common\ISegmentStream.cpp" />
+    <ClCompile Include="vendor\common\ISingleton.cpp" />
+    <ClCompile Include="vendor\common\ITextParser.cpp" />
+    <ClCompile Include="vendor\common\IThread.cpp" />
+    <ClCompile Include="vendor\common\ITimer.cpp" />
+    <ClCompile Include="vendor\common\ITypes.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\BSModelDB.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Colors.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\CustomMenu.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameAPI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameBSExtraData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameCamera.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameEvents.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameExtraData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameFormComponents.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameForms.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameHandlers.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameInput.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameMenus.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameObjects.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GamePathing.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameReferences.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameResources.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameRTTI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameSettings.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameStreams.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameThreads.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameTypes.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GameUtilities.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\GlobalLocks.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\HashUtil.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Camera.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Data.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Debug.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Diagnostics.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_DirectInput8Create.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Event.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Gameplay.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Handlers.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Memory.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_NetImmerse.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_ObScript.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Papyrus.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_SaveLoad.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Scaleform.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_Threads.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Hooks_UI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\InputMap.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\InternalSerialization.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\InternalTasks.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiAdditionalGeometryData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiControllers.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiExtraData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiGeometry.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiInterpolators.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiLight.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiMaterial.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiNodes.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiObjects.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiProperties.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiRenderer.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiRTTI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiSerialization.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiTextures.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\NiTypes.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ObScript.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusActiveMagicEffect.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusActor.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusActorBase.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusActorValueInfo.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusAlias.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusAmmo.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusArgs.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusArmor.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusArmorAddon.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusArt.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusBook.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusCamera.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusCell.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusClass.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusColorForm.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusCombatStyle.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusConstructibleObject.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusDefaultObjectManager.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusDelayFunctors.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusEnchantment.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusEquipSlot.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusEvents.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusFaction.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusFlora.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusForm.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusFormList.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusGame.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusGameData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusHeadPart.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusIngredient.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusInput.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusInterfaces.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusKeyword.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusLeveledActor.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusLeveledItem.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusLeveledSpell.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusLocation.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusMagicEffect.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusMath.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusMisc.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusModEvent.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusNativeFunctions.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusNetImmerse.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusObjectReference.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusObjects.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusPerk.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusPotion.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusQuest.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusRace.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusReferenceAlias.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusScroll.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusShout.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusSKSE.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusSound.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusSoundDescriptor.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusSpawnerTask.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusSpell.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusStringUtil.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusTextureSet.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusTree.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusUI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusUICallback.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusUtility.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusValue.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusVM.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusWeapon.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusWeather.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PapyrusWornObject.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\PluginManager.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformAPI.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformCallbacks.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformExtendedData.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformLoader.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformMovie.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformState.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformTypes.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformValue.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\ScaleformVM.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Serialization.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\skse64.cpp" />
+    <ClCompile Include="vendor\skse64\skse64\Translation.cpp" />
+    <ClCompile Include="vendor\skse64\skse64_common\BranchTrampoline.cpp" />
+    <ClCompile Include="vendor\skse64\skse64_common\HashUtil.cpp" />
+    <ClCompile Include="vendor\skse64\skse64_common\Relocation.cpp" />
+    <ClCompile Include="vendor\skse64\skse64_common\SafeWrite.cpp" />
+    <ClCompile Include="vendor\skse64\skse64_common\Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vendor\common\IDatabase.inc" />
+    <None Include="vendor\skse64\skse64\GameRTTI.inl" />
+    <None Include="vendor\skse64\skse64\PapyrusNativeFunctionDef.inl" />
+    <None Include="vendor\skse64\skse64\PapyrusNativeFunctionDef_Base.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="vendor\skse64\skse64_common\skse_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="vendor\common\common_license.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

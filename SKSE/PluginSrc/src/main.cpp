@@ -1,16 +1,18 @@
 // When Removing SKSE64 Src Files From Project, Change Headers To Appropriate Paths For Build Against It
-#include "../SKSE64(Remove When Done)/common/IDebugLog.h"        //------------------ For _MESSAGE
-#include "../SKSE64(Remove When Done)/skse64/skse64/PluginAPI.h" //----------- For SKSEInterface and PluginInfo
-#include "ShlObj.h" //-------------------------------------------------------- Windows Header - For CSIDL_MYDOCUMENTS
-#include "../SKSE64(Remove When Done)/skse64/skse64_common/skse_version.h" //-- For Runtime Version Checking
-
+#include "../common/IDebugLog.h"        //------------------ For _MESSAGE
+#include "../common/ITypes.h"           //------------------ For SKSE Typing Such As UInt32
+#include "skse64/PluginAPI.h"           //------------------ For SKSEInterface and PluginInfo
+#include "ShlObj.h"                     //------------------ Windows Header - For CSIDL_MYDOCUMENTS
+#include "skse64_common/skse_version.h" //------------------ For Runtime Version Checking
 /*
     As Of Right Now, Solely Writing This For The Current SE Runtime Of 1.5.97
     Don't Have LE To Test It On And It Really Only Makes Sense To Start Writing
     For The Current Version On SE
 */
 
-// Globally Defined Interface Handles
+// Globally Defined Interface Handles And Variables
+IDebugLog gameLog;
+const UInt32 kSerializationDataVersion             = 1;
 PluginHandle pluginHandle                          = kPluginHandle_Invalid;
 SKSETaskInterface* taskInterface                   = nullptr;
 SKSEPapyrusInterface* papyrusInterface             = nullptr;
@@ -38,9 +40,12 @@ extern "C" {
 
 		// Not Sure What Behavior I Want For Editor Loading Yet...As This Pertains
 		// To Weather Effects, Might Be Useful To Be Able To Load It Into The Editor
+		// NOTE(Ryan): I've Been Viewing A Bunch Of Mods As I've Been A Lil Stuck On
+		// Registering For SKSE And Everyone Seems To Return False Here -> Find Out Why
 		if(skse->isEditor) {
-			_MESSAGE("Dynamic Weather Effects Plugin For 1.5.97 Was Loaded In The Editor");
-			return true;
+			_MESSAGE("Dynamic Weather Effects Plugin For 1.5.97 Was Loaded In The Editor: Marking As "
+				 "Incompatible");
+			return false;
 		}
 
 		// Checking Against The Runtime Version For Compatibility (Currently: SE=1.5.97, LE=1.5.73)
@@ -55,14 +60,14 @@ extern "C" {
 		// Checking Against The Task Version For Acquiring
 		taskInterface = ( SKSETaskInterface* ) skse->QueryInterface(kInterface_Task);
 		if(!taskInterface) {
-			_FATALERROR("Was Unable To Acquire The Task Interface");
+			_FATALERROR("Unable To Acquire The Task Interface");
 			return false;
 		}
 
 		// Checking Against The Papyrus Version For Acquiring
 		papyrusInterface = ( SKSEPapyrusInterface* ) skse->QueryInterface(kInterface_Papyrus);
 		if(!papyrusInterface) {
-			_FATALERROR("Was Unable To Acquire The Papyrus Interface");
+			_FATALERROR("Unable To Acquire The Papyrus Interface");
 			return false;
 		}
 
@@ -70,7 +75,7 @@ extern "C" {
 		serializationInterface =
 		  ( SKSESerializationInterface* ) skse->QueryInterface(kInterface_Serialization);
 		if(!serializationInterface) {
-			_FATALERROR("Was Unable To Acquire The Serialization Interface");
+			_FATALERROR("Unable To Acquire The Serialization Interface");
 			return false;
 		}
 
@@ -94,7 +99,7 @@ extern "C" {
 			messageInterface->RegisterListener(pluginHandle, "SKSE", MessageManager);
 			_MESSAGE("Successfully Registered For Message Handling")
 		} else {
-			_FATALERROR("Was Unable To Acquire The Messaging Interface");
+			_FATALERROR("Unable To Acquire The Messaging Interface");
 		}
 
 		// ToDo: Need To Implement From PapyrusCell.h And PapyrusEvents.h

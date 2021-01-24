@@ -2,4 +2,4 @@ meta.ini
 Dynamic Weather Effects.esp
 Source/Scripts/temp/
 .vs/
-SKSE/PluginSrc/SKSE64(Remove When Done)/
+SKSE\PluginSrc\vendor
