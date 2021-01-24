@@ -1,4 +1,4 @@
-#include "src/DynamicPlugin.h"
+#include "DynamicPlugin.h"
 #include "skse64_common/Utilities.h"
 
 namespace DynamicWeatherEffects {
