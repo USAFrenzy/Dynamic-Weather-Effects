@@ -1,9 +1,0 @@
-Package: boost-atomic
-Version: 1.75.0
-Depends: boost-align, boost-assert, boost-build, boost-config, boost-integer, boost-modular-build-helper, boost-predef, boost-preprocessor, boost-static-assert, boost-type-traits, boost-vcpkg-helpers, boost-winapi
-Architecture: x64-windows-static
-Multi-Arch: same
-Abi: 728c4fa5f503bbd9b5e28df141c5175943f9163f
-Description: Boost atomic module
-Type: Port
-Status: install ok installed

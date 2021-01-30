@@ -3,6 +3,8 @@ Welcome To The Mod Page!
 
 This is a WIP project that, when done, will add dynamic weather effects to the world of Skyrim SE.
 
+The Framework For The Plugin Can Be Found Over At [Dynamic Weather Effects Framework](https://github.com/USAFrenzy/DynamicWeatherEffects.git)
+
 The idea and scope of this mod will be to cover as many weather/elemental effects as possible in a low script latenecy and dll running fashion to increase performance of event polling and effect applications.
 
 ### Current Mod Ideas
