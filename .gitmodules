@@ -1,0 +1,3 @@
+[submodule "SKSE\\PluginSrc"]
+	path = SKSE\\PluginSrc
+	url = https://github.com/USAFrenzy/DynamicWeatherEffects-Framework.git
