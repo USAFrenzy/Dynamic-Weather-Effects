@@ -4,6 +4,14 @@ Welcome To The Mod Page!
 This is a WIP project that, when done, will add dynamic weather effects to the world of Skyrim SE.
 
 The Framework For The Plugin Can Be Found Over At [Dynamic Weather Effects Framework](https://github.com/USAFrenzy/DynamicWeatherEffects.git)
+- If Downloading This Mod To Work On The Framework And Source In Tandem - Make Sure You Do The Following:
+    - Run ```git clone https://github.com/USAFrenzy/DynamicWeatherEffects-WIP-.git```
+    - Then ```cd DyanmicWeatherEffects-WIP-```
+    - Run ```git submodule update --init --recursive```
+    - Run ```git submodule update --recursive --remote```
+- This Way You'll See The Updated Framework In Your Download Without Having To Go Clone That Repo
+    - The Plugin Source Code Will Be Found Under ```SKSE/PluginSrc``` Directory
+    - The Scripts Source Code Will Be Found Under ```Source/Scripts``` Directory
 
 The idea and scope of this mod will be to cover as many weather/elemental effects as possible in a low script latenecy and dll running fashion to increase performance of event polling and effect applications.
 
