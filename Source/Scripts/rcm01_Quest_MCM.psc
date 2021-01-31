@@ -32,7 +32,6 @@ bool isDryWells
 bool isFlammableWood
 bool isThirstIncreased
 bool isThirstIncreasedNeeds
-bool isThirstEnabled
 float thirstSummation = 15.0
 float thirstSummationAction = 15.0
 float thirstSummationNeeds = 15.0

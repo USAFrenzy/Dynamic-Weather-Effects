@@ -10,6 +10,9 @@ The Framework For The Plugin Can Be Found Over At [Dynamic Weather Effects Frame
     - Run ```git submodule update --init --recursive```
     - Run ```git submodule update --recursive --remote```
 - This Way You'll See The Updated Framework In Your Download Without Having To Go Clone That Repo
+    - When Building The Plugin Source Code, Follow The Directions On That Page - You Won't Have </br>
+      To Run The Git Submodule Update Commands Again And Can Just ```cmake -B build -S .``` </br> 
+      From The Root Directory
     - The Plugin Source Code Will Be Found Under ```SKSE/PluginSrc``` Directory
     - The Scripts Source Code Will Be Found Under ```Source/Scripts``` Directory
 
